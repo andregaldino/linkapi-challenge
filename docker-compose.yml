@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  server:
+    image: node:10.14.2-alpine
+    command: yarn start
+    working_dir: /app
+    volumes:
+      - .:/app/
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+  database:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/var/lib/linkapi/mongo
+volumes:
+  mongodata:
