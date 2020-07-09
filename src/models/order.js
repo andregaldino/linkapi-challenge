@@ -5,6 +5,9 @@ const orderSchema = new Schema({
   status: {
     type: String,
   },
+  externalId: {
+    type: Number,
+  },
 }, {
   collection: 'orders',
 });
