@@ -42,3 +42,7 @@ $ yarn integration:bling
 Criei um webhook para ficar escutando as atualizações de oportunidades, para funcionar corretamente é preciso cadastrar a URI na api do pipedrive com evento de `updated` para a entidade `deal`.
 
 Foi utilizado o docker para manter o ambiente de desenvolvimento isolado.
+
+## Ngrok
+
+Serviço de tunelamento que possibilita expor um serviço local na internet
