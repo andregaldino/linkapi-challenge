@@ -31,3 +31,37 @@ const getOrderByExternalId = async (externalId) => {
 };
 
 exports.getOrderByExternalId = getOrderByExternalId;
+
+const getAllOrders = async () => {
+  const orders = await Order.find();
+  return orders;
+};
+
+exports.getAllOrders = getAllOrders;
+
+const getOrderById = async (id) => {
+  const order = await Order.findOne({ id });
+  return order;
+};
+
+exports.getOrderById = getOrderById;
+
+const getOrdersDayTotal = async () => {
+  const orders = await Order.aggregate([
+    {
+      $group: {
+        _id: { $dateToString: { format: '%Y-%m-%d', date: '$wonAt' } },
+        sum: { $sum: '$value' },
+      },
+    },
+  ]);
+  return orders.map((order) => {
+    return {
+      // eslint-disable-next-line no-underscore-dangle
+      day: order._id,
+      totalAmount: parseFloat(order.sum),
+    };
+  });
+};
+
+exports.getOrdersDayTotal = getOrdersDayTotal;

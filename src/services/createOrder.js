@@ -24,6 +24,8 @@ const createOrderOnBling = async (deal) => {
     status: deal.status,
     externalId: deal.id,
     orderId: pedido.idPedido,
+    wonAt: deal.won_time,
+    value: deal.value,
   });
   return resultDb;
 };

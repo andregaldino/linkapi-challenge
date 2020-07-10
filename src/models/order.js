@@ -11,7 +11,17 @@ const orderSchema = new Schema(
     externalId: {
       type: Number,
     },
+    orderId: {
+      type: String,
+    },
+    wonAt: {
+      type: Date,
+    },
+    value: {
+      type: mongoose.Decimal128,
+    },
   },
+  { timestamps: true },
   {
     collection: 'orders',
   },
