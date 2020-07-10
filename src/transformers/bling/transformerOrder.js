@@ -2,7 +2,6 @@
 
 'use strict';
 
-
 const client = ({ person_id }) => {
   const { name, email: emails, phone: phones } = person_id;
   const email = emails.find((mail) => mail.value.length > 0);
@@ -51,6 +50,7 @@ const items = (deal) => {
         item: {
           descricao: deal.title,
           vlr_unit: deal.value,
+          codigo: Math.random(),
         },
       },
     ];

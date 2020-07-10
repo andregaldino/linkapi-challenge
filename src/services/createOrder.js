@@ -17,10 +17,13 @@ const createOrderOnBling = async (deal) => {
   };
   const orderTransformer = transformerOrder(dealDetails);
   const orderXml = toXml(orderTransformer);
-  await createOrder(orderXml);
+  const { pedidos } = await createOrder(orderXml);
+  const { pedido } = pedidos[0];
+
   const resultDb = await save({
     status: deal.status,
     externalId: deal.id,
+    orderId: pedido.idPedido,
   });
   return resultDb;
 };

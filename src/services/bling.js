@@ -16,7 +16,17 @@ const instance = axios.create({
   },
 });
 
-const createOrder = async (xml) =>
-  instance.post(`${versionApi}/pedido/json/?apikey=${apikey}&xml=${xml}`);
+const createOrder = async (xml) => {
+  const { data } = await instance.post(
+    `${versionApi}/pedido/json/?apikey=${apikey}&xml=${xml}`,
+  );
+
+  if (data.retorno.erros) {
+    const msg = JSON.stringify(data.retorno.erros);
+    throw new Error(`Bling integration falied: ${msg}`);
+  }
+
+  return data.retorno;
+};
 
 exports.createOrder = createOrder;
