@@ -1,9 +1,13 @@
+'use strict';
+
 const Order = require('../models/order');
 
 const getOrdersByExternalIds = async (externalIds = []) => {
-  const orders = await Order.find({externalId: {
-    $in: externalIds,
-  }});
+  const orders = await Order.find({
+    externalId: {
+      $in: externalIds,
+    },
+  });
 
   return orders;
 };
@@ -11,19 +15,19 @@ const getOrdersByExternalIds = async (externalIds = []) => {
 exports.getOrdersByExternalIds = getOrdersByExternalIds;
 
 const save = async (order) => {
-  const saved = await Order.create(order, (err, response) => {
+  const saved = await Order.create(order, (err) => {
     if (err) {
       throw err;
     }
   });
-  return saved
+  return saved;
 };
 
 exports.save = save;
 
 const getOrderByExternalId = async (externalId) => {
-  const order = await Order.findOne({externalId});
+  const order = await Order.findOne({ externalId });
   return order;
-}
+};
 
 exports.getOrderByExternalId = getOrderByExternalId;

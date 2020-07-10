@@ -1,7 +1,10 @@
+/* eslint-disable no-console */
+
 'use strict';
-const {getDeals} = require('../services/pipedriveDeals');
-const {getOrdersByExternalIds} = require('../services/order');
-const createOrderOnBling = require('../services/createOrder')
+
+const { getDeals } = require('../services/pipedriveDeals');
+const { getOrdersByExternalIds } = require('../services/order');
+const createOrderOnBling = require('../services/createOrder');
 require('../services/connectDatabase').connect();
 
 const options = {
@@ -13,8 +16,7 @@ const options = {
 
 (async () => {
   const resultDeals = await getDeals(options);
-  const {data} = resultDeals;
-
+  const { data } = resultDeals;
 
   const dealIds = data.map((deal) => deal.id);
   const orders = await getOrdersByExternalIds(dealIds);
@@ -24,13 +26,15 @@ const options = {
 
   const allOrdersBling = dealsIdToIntegrate.map(async (deal) => {
     return createOrderOnBling(deal);
-  })
+  });
 
-  Promise.all(allOrdersBling).then(result => {
-    console.log('all deals created on bling erp')
-  }).catch(er => {
-    console.log('error to create order on bling erp', er)
-  })
+  Promise.all(allOrdersBling)
+    .then(() => {
+      console.log('all deals created on bling erp');
+    })
+    .catch((er) => {
+      console.log('error to create order on bling erp', er);
+    });
 })().catch((e) => {
   console.log(e);
 });

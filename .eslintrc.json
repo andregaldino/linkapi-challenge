@@ -1,14 +1,12 @@
 {
   "env": {
-    "browser": true,
     "commonjs": true,
-    "es6": true
+    "es6": true,
+    "node": true
   },
-  "extends": [
-    "google"
-  ],
+  "extends": ["airbnb-base/legacy", "prettier"],
   "parserOptions": {
-    "ecmaVersion": 6
+    "ecmaVersion": 11
   },
   "rules": {}
 }

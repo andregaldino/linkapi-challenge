@@ -1,16 +1,21 @@
+'use strict';
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const orderSchema = new Schema({
-  status: {
-    type: String,
+const orderSchema = new Schema(
+  {
+    status: {
+      type: String,
+    },
+    externalId: {
+      type: Number,
+    },
   },
-  externalId: {
-    type: Number,
+  {
+    collection: 'orders',
   },
-}, {
-  collection: 'orders',
-});
+);
 
 const modelOrder = mongoose.model('Order', orderSchema);
 module.exports = modelOrder;
