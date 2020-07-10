@@ -2,7 +2,7 @@
 
 'use strict';
 
-const { getDeals } = require('../services/pipedriveDeals');
+const { getDeals } = require('../services/pipedrive/deals');
 const { getOrdersByExternalIds } = require('../services/order');
 const createOrderOnBling = require('../services/createOrder');
 require('../services/connectDatabase').connect();

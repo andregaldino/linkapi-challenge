@@ -2,17 +2,12 @@
 
 const Order = require('../models/order');
 
-const getOrdersByExternalIds = async (externalIds = []) => {
-  const orders = await Order.find({
+const getOrdersByExternalIds = async (externalIds = []) =>
+  Order.find({
     externalId: {
       $in: externalIds,
     },
   });
-
-  return orders;
-};
-
-exports.getOrdersByExternalIds = getOrdersByExternalIds;
 
 const save = async (order) => {
   const saved = await Order.create(order, (err) => {
@@ -23,28 +18,12 @@ const save = async (order) => {
   return saved;
 };
 
-exports.save = save;
+const getOrderByExternalId = async (externalId) =>
+  Order.findOne({ externalId });
 
-const getOrderByExternalId = async (externalId) => {
-  const order = await Order.findOne({ externalId });
-  return order;
-};
+const getAllOrders = async () => Order.find();
 
-exports.getOrderByExternalId = getOrderByExternalId;
-
-const getAllOrders = async () => {
-  const orders = await Order.find();
-  return orders;
-};
-
-exports.getAllOrders = getAllOrders;
-
-const getOrderById = async (id) => {
-  const order = await Order.findOne({ id });
-  return order;
-};
-
-exports.getOrderById = getOrderById;
+const getOrderById = async (id) => Order.findOne({ id });
 
 const getOrdersDayTotal = async () => {
   const orders = await Order.aggregate([
@@ -64,4 +43,11 @@ const getOrdersDayTotal = async () => {
   });
 };
 
-exports.getOrdersDayTotal = getOrdersDayTotal;
+module.exports = {
+  getOrdersDayTotal,
+  getOrderByExternalId,
+  getAllOrders,
+  getOrderById,
+  save,
+  getOrdersByExternalIds,
+};

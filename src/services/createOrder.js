@@ -1,9 +1,9 @@
 'use strict';
 
-const { createOrder } = require('./bling');
+const orderBling = require('./bling/order');
 const transformerOrder = require('../transformers/bling/transformerOrder');
 const toXml = require('./toXml');
-const { getDealWithProduct } = require('./pipedriveDeals');
+const { getDealWithProduct } = require('./pipedrive/deals');
 const { save } = require('../services/order');
 
 const createOrderOnBling = async (deal) => {
@@ -17,7 +17,7 @@ const createOrderOnBling = async (deal) => {
   };
   const orderTransformer = transformerOrder(dealDetails);
   const orderXml = toXml(orderTransformer);
-  const { pedidos } = await createOrder(orderXml);
+  const { pedidos } = await orderBling.create(orderXml);
   const { pedido } = pedidos[0];
 
   const resultDb = await save({
