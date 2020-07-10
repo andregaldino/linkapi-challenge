@@ -11,11 +11,19 @@ const getOrdersByExternalIds = async (externalIds = []) => {
 exports.getOrdersByExternalIds = getOrdersByExternalIds;
 
 const save = async (order) => {
-  Order.create(order, (err) => {
+  const saved = await Order.create(order, (err, response) => {
     if (err) {
-      throw err
+      throw err;
     }
   });
+  return saved
 };
 
 exports.save = save;
+
+const getOrderByExternalId = async (externalId) => {
+  const order = await Order.findOne({externalId});
+  return order;
+}
+
+exports.getOrderByExternalId = getOrderByExternalId;

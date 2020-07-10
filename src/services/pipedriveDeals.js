@@ -7,3 +7,11 @@ lib.Configuration.apiToken = token;
 const getDeals = (options = {}) => lib.DealsController.getAllDeals(options);
 
 exports.getDeals = getDeals;
+
+const getDealWithProduct = (options) => lib.DealsController.listProductsAttachedToADeal(options);
+
+exports.getDealWithProduct = getDealWithProduct;
+
+const getDealById = (id) => lib.DealsController.getDetailsOfADeal(id);
+
+exports.getDealById = getDealById;

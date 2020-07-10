@@ -5,6 +5,7 @@ module.exports = {
     token: process.env.PIPEDRIVE_TOKEN,
   },
   bling: {
-    apiKey: process.env.BLING_API_KEY,
+    host: 'https://bling.com.br',
+    apikey: process.env.BLING_API_KEY,
   },
 };
