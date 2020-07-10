@@ -6,36 +6,52 @@ const pipedriveService = require('../services/pipedrive/deals');
 
 // eslint-disable-next-line no-unused-vars
 exports.all = async (req, res) => {
-  const orders = await orderService.getAllOrders();
-  return res.send(orders);
+  try {
+    const orders = await orderService.getAllOrders();
+    res.send(orders);
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
+  }
 };
 
 // eslint-disable-next-line no-unused-vars
 exports.findById = async (req, res) => {
-  const orders = await orderService.getOrderById(req.id);
-  return res.send(orders);
+  try {
+    const orders = await orderService.getOrderById(req.params.id);
+    res.send(orders);
+  } catch (error) {
+    res.status(404).send('Not found');
+  }
 };
 
 exports.callbackUpdated = async (req, res) => {
-  const {
-    current: { status, id },
-  } = req.body;
-  if (status !== 'won') {
+  try {
+    const {
+      current: { status, id },
+    } = req.body;
+    if (status !== 'won') {
+      return res.send();
+    }
+
+    const order = await orderService.getOrderByExternalId(id);
+    if (order) {
+      return res.send();
+    }
+
+    const { data: deal } = await pipedriveService.getDealById(id);
+    await createOrderOnBling(deal);
+
     return res.send();
+  } catch (error) {
+    return res.status(500).send('Internal Server Error');
   }
-
-  const order = await orderService.getOrderByExternalId(id);
-  if (order) {
-    return res.send();
-  }
-
-  const { data: deal } = await pipedriveService.getDealById(id);
-  await createOrderOnBling(deal);
-
-  return res.send();
 };
 
 exports.getOrdersByDayTotal = async (req, res) => {
-  const orders = await orderService.getOrdersDayTotal();
-  return res.send(orders);
+  try {
+    const orders = await orderService.getOrdersDayTotal();
+    res.send(orders);
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
+  }
 };
